@@ -1,6 +1,6 @@
 import express from 'express';
-import knex from '../db/knex'
-  ;
+import knex from '../db/knex';
+import TokenGerator from 'uuid-token-generator';
 const router = express.Router();
 
 function Users() {
@@ -11,7 +11,9 @@ function Users() {
 router.get('/', function(req, res, next) {
 
   Users().select().then(function (records) {
-    res.send( records );
+    Users().select().then(function (records) {
+      res.render('users', records);
+    });
   });
 });
 
