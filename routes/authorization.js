@@ -19,11 +19,11 @@ const logout = (login) => {
 };
 
 
-router.post('/login', function (req, res, next) {
+router.post('/login', (req, res) => {
   const {login, password} = req.body;
 
 
-  Users().where({login}).select().then(function (records) {
+  Users().where({login}).select().then((records) => {
     const token = new TokenGerator().generate();
 
     if (records.length === 0 || records[0].password !== password) {
@@ -37,12 +37,12 @@ router.post('/login', function (req, res, next) {
   });
 });
 
-router.post('/logout', function (req, res, next) {
+router.post('/logout', (req, res) => {
   const {login} = req.body;
 
-  logout(login).then( () => {
-    res.send( 'User have been logout' )
-  } );
+  logout(login).then(() => {
+    res.send('User has been logout')
+  });
 });
 
 export default router;
