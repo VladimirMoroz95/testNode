@@ -3,6 +3,11 @@ import knex from '../db/knex';
 
 const router = express.Router();
 
+const Articles = () => {
+  return knex('Article');
+};
+
+
 const Users = () => {
   return knex('User');
 };
@@ -10,22 +15,22 @@ const Users = () => {
 router.get('/', function (req, res, next) {
 
   Users().select().then((records) => {
-    res.render('users', records);
+    res.render('articles', records);
   });
 
 });
 
 router.put('/', (req, res, next) => {
-  const {login, password, fio} = req.body;
+  const {title, author_id, tags} = req.body;
 
-  if (!login || !password) res.status(400).send('The login or password is incorrect');
+  if (!title) res.status(400).send('The titile is incorrect');
 
-  Users().where({login}).select().then((records) => {
-    if (records.length > 0) {
-      res.status(400).send('User already exists with this login')
+  Users().where({id: author_id}).select().then((records) => {
+    if (records.length === 0) {
+      res.status(400).send('Author is not defined')
     } else {
-      Users().insert({login, password, fio}).then(() => {
-        res.send('User has been add')
+      Articles().insert({title, author_id, tags}).then(() => {
+        res.send('Article has been add')
       });
     }
   });
@@ -36,8 +41,8 @@ router.put('/', (req, res, next) => {
 router.delete('/:id', (req, res) => {
   const {id} = req.params;
 
-  return Users().where({id}).del().then(() => {
-    res.send('User has been delete')
+  return Articles().where({id}).del().then(() => {
+    res.send('Article has been delete')
   });
 });
 
