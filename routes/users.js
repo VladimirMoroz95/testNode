@@ -3,11 +3,10 @@ import knex from '../db/knex';
 import TokenGerator from 'uuid-token-generator';
 const router = express.Router();
 
-function Users() {
+const Users = () => {
   return knex('User');
-}
+};
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
 
   Users().select().then(function (records) {
