@@ -16,9 +16,16 @@ consumes:
 # format of the responses to the client (Accepts)
 produces:
   - application/json
+
+tags:
+  - name: "Users"
+  - name: "Articles"
+
 paths:
   /users:
     get:
+      tags:
+      - "Users"
       summary: Returns users list
       operationId: getUsersList
       responses:
@@ -34,9 +41,13 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
+      tags:
+      - "Users"
       summary: Add new user
       operationId: addUser
       parameters:
+      - in: "body"
+        name: "body"
         required: true
         schema:
           $ref: "#/definitions/User"
@@ -54,6 +65,8 @@ paths:
 
   /users/{id}:
     delete:
+      tags:
+      - "Users"
       summary: Delete user
       operationId: DelUser
       parameters:
@@ -64,7 +77,60 @@ paths:
           type: "integer"
           format: "int64"
 
+  /articles:
+    get:
+      tags:
+        - "Articles"
+      summary: Returns arcticles list
+      operationId: getUsersList
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Article"
 
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      tags:
+        - "Articles"
+      summary: Add new arcticle
+      operationId: addArticle
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Article"
+      responses:
+        200:
+          description: Article has been add
+        400:
+          #todo add different response
+          description: Author is not defined
+
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /articles/{id}:
+    delete:
+      tags:
+        - "Articles"
+      summary: Delete article
+      operationId: DelArticle
+      parameters:
+        - name: "id"
+          in: "path"
+          description: ""
+          required: true
+          type: "integer"
+          format: "int64"
 definitions:
   User:
     type: object
@@ -81,6 +147,24 @@ definitions:
         type: string
       fio:
         type:string
+
+  Arcticle:
+    type: object
+    required:
+      - id
+      - author_id
+      - title
+    properties:
+      id:
+        type: number
+      author_id:
+        type: number
+      titile:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
 
 
   ErrorResponse:

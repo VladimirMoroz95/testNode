@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
 
 });
 
-router.put('/', (req, res, next) => {
+router.post('/', (req, res, next) => {
   const {title, author_id, tags} = req.body;
 
   if (!title) res.status(400).send('The titile is incorrect');
