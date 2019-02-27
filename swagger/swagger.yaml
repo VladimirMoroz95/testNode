@@ -18,10 +18,38 @@ produces:
   - application/json
 
 tags:
+  - name: "Authorization"
   - name: "Users"
   - name: "Articles"
 
 paths:
+  /auth/login:
+    post:
+      tags:
+      - "Authorization"
+      description: Logs user into the system
+      operationId: "loginUser"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Login"
+
+  /auth/logout:
+    post:
+      tags:
+        - "Authorization"
+      description: Logs out current logged in user session
+      operationId: "logoutUser"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Logout"
+
+
   /users:
     get:
       tags:
@@ -82,7 +110,7 @@ paths:
       tags:
         - "Articles"
       summary: Returns arcticles list
-      operationId: getUsersList
+      operationId: getArticlesList
       responses:
         200:
           description: successful operation
@@ -132,6 +160,26 @@ paths:
           type: "integer"
           format: "int64"
 definitions:
+
+  Login:
+    type: object
+    required:
+      - login
+      - password
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+
+  Logout:
+    type: object
+    required:
+      - login
+    properties:
+      login:
+        type: string
+
   User:
     type: object
     required:
@@ -146,7 +194,7 @@ definitions:
       password:
         type: string
       fio:
-        type:string
+        type: string
 
   Arcticle:
     type: object
