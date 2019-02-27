@@ -17,7 +17,7 @@ router.get('/', function (req, res, next) {
 
 });
 
-router.put('/', (req, res, next) => {
+router.post('/', (req, res, next) => {
   const {login, password, fio} = req.body;
 
   if (!login || !password) res.status(400).send('The login or password is incorrect');
