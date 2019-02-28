@@ -35,6 +35,13 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/Login"
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: string
+        '400':
+          description: The login or password is incorrect
 
   /auth/logout:
     post:
@@ -48,8 +55,11 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/Logout"
-
-
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: string
   /users:
     get:
       tags:
@@ -97,6 +107,13 @@ paths:
         - "Users"
       summary: Returns one user
       operationId: getUser
+      parameters:
+        - name: "id"
+          in: "path"
+          description: ""
+          required: true
+          type: "integer"
+          format: "int64"
       responses:
         200:
           description: successful operation
@@ -119,6 +136,14 @@ paths:
           required: true
           type: "integer"
           format: "int64"
+      responses:
+        200:
+          description: successful operation
+
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /articles:
     get:
@@ -174,6 +199,14 @@ paths:
           required: true
           type: "integer"
           format: "int64"
+      responses:
+        200:
+          description: successful operation
+
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 definitions:
 
   Login:
@@ -211,17 +244,16 @@ definitions:
       fio:
         type: string
 
-  Arcticle:
+  Article:
     type: object
     required:
       - id
-      - author_id
       - title
     properties:
       id:
         type: number
-      author_id:
-        type: number
+      fio:
+        type: string
       titile:
         type: string
       tags:
