@@ -11,7 +11,21 @@ router.get('/', function (req, res, next) {
 
   Users().select().then((records) => {
     Users().select().then((records) => {
-      res.render('users', records);
+      res.send(records);
+    });
+  });
+
+});
+
+router.get('/:id', function (req, res, next) {
+
+  Users().select().where({id}).then((records) => {
+    Users().select().then((records) => {
+      if (records.length === 0) {
+        res.status(400).send('User not found')
+      } else {
+        res.send(records[0]);
+      }
     });
   });
 

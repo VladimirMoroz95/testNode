@@ -14,9 +14,12 @@ const Users = () => {
 
 router.get('/', function (req, res, next) {
 
-  Users().select().then((records) => {
-    res.render('articles', records);
-  });
+  Articles()
+    .join('User', 'Article.author_id', '=', 'User.id')
+    .select('Article.id', 'Article.title', 'Article.tags','User.fio')
+    .then((records) => {
+      res.send(records);
+    });
 
 });
 
