@@ -10,6 +10,7 @@ const Users = () => {
 router.get('/', function (req, res, next) {
 
   Users().select().then((records) => {
+    console.log( 'res', res, 'send', res.send );
     res.send(records);
   });
 
