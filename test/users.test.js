@@ -8,7 +8,7 @@ describe('test users api', function() {
 
   it('should return users list', (done) => {
     testServer
-      .get('/users')
+      .get('/')
       .expect(200)
       .expect('Content-type', /application\/json/)
       .end(done)
