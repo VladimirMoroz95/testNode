@@ -11,6 +11,7 @@ router.get('/', function (req, res, next) {
 
   Users().select().then((records) => {
     res.send(records);
+    res.end();
   });
 
 });
@@ -38,7 +39,8 @@ router.post('/', (req, res, next) => {
 
   Users().where({login}).select().then((records) => {
     if (records.length > 0) {
-      res.status(400).send('User already exists with this login');
+      res.statusCode = 400;
+      res.send('User already exists with this login');
     } else {
       Users().insert({login, password, fio}).then(() => {
         res.status(200).send('User has been add');
@@ -46,7 +48,6 @@ router.post('/', (req, res, next) => {
     }
   });
 
-  next();
 
 });
 
